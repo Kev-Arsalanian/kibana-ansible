@@ -4,12 +4,10 @@
 # sudo ansible-playbook -i hosts/elastic.hosts playbooks/filebeat.yml
 
 - hosts: filebeat
-#  connection: local
   remote_user: root
   become: true
   roles:
-#    - role: elastic_stack
-    - role: filebeat
+    - filebeat
 #  tasks:
 #    # If you're using filebeat installed on another server(s), you need to load the filebeat template
 #    - name: Load Filebeat template
