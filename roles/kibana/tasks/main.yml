@@ -10,38 +10,35 @@
     name: apt-transport-https
     state: present
 
-- name: Adding filebeat 7.x repository
+- name: Adding kibana 7.x repository
   apt_repository: 
     repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
     state: present 
     filename: elastic-7.x
     update_cache: yes
 
-- name: Installing filebeat from apt repository
+- name: Installing kibana from apt repository
   apt: 
-    name: filebeat
+    name: kibana
     state: present
     update_cache: yes
 
 - name: Copying config file 
   template: 
-    src: filebeat.j2
-    dest: /etc/filebeat/filebeat.yml
+    src: kibana.j2
+    dest: /etc/kibana/kibana.yml
 
 - name: Reloading systemd daemon
   systemd: 
     daemon_reload: yes
 
-- name: Enabling filebeat.service
+- name: Enabling kibana.service
   systemd:
-    name: filebeat.service
+    name: kibana.service
     enabled: yes
 
-- name: Start filebeat.service
+- name: Start kibana.service
   systemd: 
-    name: filebeat.service
+    name: kibana.service
     state: restarted
   become: true
-
-- name: Export Filebeat template
-  shell: filebeat export template > /tmp/filebeat.template.json
